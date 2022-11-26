@@ -46,6 +46,14 @@ public class InquilinosController {
         }
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deletarUmInquilino(@PathVariable(value = "id") UUID id){
+        Optional<ListarInquilinosDTO> inquilino = inquilinosService.getById(id);
+        if (!inquilino.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Inquilino não encontrado");
+        }
+        inquilinosService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Cadastro excluído com sucesso");
+    }
 
 }

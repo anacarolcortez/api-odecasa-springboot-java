@@ -30,4 +30,9 @@ public class InquilinosService {
     public Optional<ListarInquilinosDTO> getById(UUID id) {
         return inquilinosRepository.findById(id).map(ListarInquilinosDTO::new);
     }
+
+    @Transactional
+    public void delete(UUID id) {
+        inquilinosRepository.deleteById(id);
+    }
 }
