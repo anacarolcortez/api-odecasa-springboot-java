@@ -1,5 +1,6 @@
 package com.api.odecasa.inquilinos.services;
 
+import com.api.odecasa.inquilinos.dtos.AtualizarInquilinosDTO;
 import com.api.odecasa.inquilinos.dtos.ListarInquilinosDTO;
 import com.api.odecasa.inquilinos.models.InquilinosModel;
 import com.api.odecasa.inquilinos.repositories.IInquilinosRepository;
@@ -34,5 +35,17 @@ public class InquilinosService {
     @Transactional
     public void delete(UUID id) {
         inquilinosRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void desativarRegistro(UUID id) {
+        InquilinosModel inquilino = inquilinosRepository.getReferenceById(id);
+        inquilino.desativarRegistro();
+    }
+
+    @Transactional
+    public void atualizarCadastroInquilino(AtualizarInquilinosDTO inquilinoDTO) {
+        InquilinosModel inquilino = inquilinosRepository.getReferenceById(inquilinoDTO.getId());
+        inquilino.atualizarPeloId(inquilinoDTO);
     }
 }

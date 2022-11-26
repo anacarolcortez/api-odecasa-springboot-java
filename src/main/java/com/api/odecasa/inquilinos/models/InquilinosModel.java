@@ -1,5 +1,6 @@
 package com.api.odecasa.inquilinos.models;
 
+import com.api.odecasa.inquilinos.dtos.AtualizarInquilinosDTO;
 import com.api.odecasa.inquilinos.dtos.CadastrarInquilinosDTO;
 import lombok.*;
 
@@ -10,7 +11,6 @@ import java.time.ZoneId;
 import java.util.UUID;
 
 @Data
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of="id")
@@ -56,6 +56,32 @@ public class InquilinosModel implements Serializable {
         this.bio = novoInquilino.getBio();
         this.telefone = novoInquilino.getTelefone();
         this.foto = novoInquilino.getFoto();
+    }
+
+    public void desativarRegistro() {
+        this.ativo = false;
+    }
+
+    public void atualizarPeloId(AtualizarInquilinosDTO inquilinoDados) {
+        if (inquilinoDados.getApto() != null) {
+            this.apto = inquilinoDados.getApto();
+        }
+
+        if (inquilinoDados.getNome() != null) {
+            this.nome = inquilinoDados.getNome();
+        }
+
+        if (inquilinoDados.getBio() != null) {
+            this.bio = inquilinoDados.getBio();
+        }
+
+        if (inquilinoDados.getTelefone() != null) {
+            this.telefone = inquilinoDados.getTelefone();
+        }
+
+        if (inquilinoDados.getFoto() != null) {
+            this.foto = inquilinoDados.getFoto();
+        }
     }
     //Com lombock não precisa incluir boilerplates de getter e setter, ele mesmo faz
 }
