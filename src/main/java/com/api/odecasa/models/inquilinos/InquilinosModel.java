@@ -1,7 +1,7 @@
-package com.api.odecasa.inquilinos.models;
+package com.api.odecasa.models.inquilinos;
 
-import com.api.odecasa.inquilinos.dtos.AtualizarInquilinosDTO;
-import com.api.odecasa.inquilinos.dtos.CadastrarInquilinosDTO;
+import com.api.odecasa.dtos.inquilinos.AtualizarInquilinosDTO;
+import com.api.odecasa.dtos.inquilinos.CadastrarInquilinosDTO;
 import lombok.*;
 
 import javax.persistence.*;

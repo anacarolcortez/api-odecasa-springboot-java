@@ -1,6 +1,6 @@
-package com.api.odecasa.inquilinos.dtos;
+package com.api.odecasa.dtos.inquilinos;
 
-import com.api.odecasa.inquilinos.models.InquilinosModel;
+import com.api.odecasa.models.inquilinos.InquilinosModel;
 import lombok.Data;
 
 import java.util.UUID;

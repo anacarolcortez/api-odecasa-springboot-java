@@ -1,11 +1,10 @@
-package com.api.odecasa.inquilinos.controllers;
+package com.api.odecasa.controllers.inquilinos;
 
-import com.api.odecasa.inquilinos.dtos.AtualizarInquilinosDTO;
-import com.api.odecasa.inquilinos.dtos.CadastrarInquilinosDTO;
-import com.api.odecasa.inquilinos.dtos.ListarInquilinosDTO;
-import com.api.odecasa.inquilinos.services.InquilinosService;
-import com.api.odecasa.inquilinos.models.InquilinosModel;
-import org.jetbrains.annotations.NotNull;
+import com.api.odecasa.dtos.inquilinos.AtualizarInquilinosDTO;
+import com.api.odecasa.dtos.inquilinos.CadastrarInquilinosDTO;
+import com.api.odecasa.dtos.inquilinos.ListarInquilinosDTO;
+import com.api.odecasa.services.inquilinos.InquilinosService;
+import com.api.odecasa.models.inquilinos.InquilinosModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

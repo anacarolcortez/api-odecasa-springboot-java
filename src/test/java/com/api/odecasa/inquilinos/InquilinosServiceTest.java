@@ -1,12 +1,11 @@
 package com.api.odecasa.inquilinos;
 
-import com.api.odecasa.inquilinos.models.InquilinosModel;
-import com.api.odecasa.inquilinos.services.InquilinosService;
+import com.api.odecasa.models.inquilinos.InquilinosModel;
+import com.api.odecasa.services.inquilinos.InquilinosService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;

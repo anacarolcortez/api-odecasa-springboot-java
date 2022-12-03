@@ -1,4 +1,4 @@
-package com.api.odecasa.inquilinos.dtos;
+package com.api.odecasa.dtos.inquilinos;
 
 import lombok.Data;
 

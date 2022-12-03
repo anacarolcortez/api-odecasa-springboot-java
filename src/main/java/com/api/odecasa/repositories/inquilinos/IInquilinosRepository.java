@@ -1,6 +1,6 @@
-package com.api.odecasa.inquilinos.repositories;
+package com.api.odecasa.repositories.inquilinos;
 
-import com.api.odecasa.inquilinos.models.InquilinosModel;
+import com.api.odecasa.models.inquilinos.InquilinosModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

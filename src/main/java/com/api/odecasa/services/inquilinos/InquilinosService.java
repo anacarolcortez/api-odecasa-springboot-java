@@ -1,9 +1,9 @@
-package com.api.odecasa.inquilinos.services;
+package com.api.odecasa.services.inquilinos;
 
-import com.api.odecasa.inquilinos.dtos.AtualizarInquilinosDTO;
-import com.api.odecasa.inquilinos.dtos.ListarInquilinosDTO;
-import com.api.odecasa.inquilinos.models.InquilinosModel;
-import com.api.odecasa.inquilinos.repositories.IInquilinosRepository;
+import com.api.odecasa.dtos.inquilinos.AtualizarInquilinosDTO;
+import com.api.odecasa.dtos.inquilinos.ListarInquilinosDTO;
+import com.api.odecasa.models.inquilinos.InquilinosModel;
+import com.api.odecasa.repositories.inquilinos.IInquilinosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
