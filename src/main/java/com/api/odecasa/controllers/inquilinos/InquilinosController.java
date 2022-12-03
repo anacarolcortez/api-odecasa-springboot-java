@@ -4,7 +4,7 @@ import com.api.odecasa.dtos.inquilinos.AtualizarInquilinosDTO;
 import com.api.odecasa.dtos.inquilinos.CadastrarInquilinosDTO;
 import com.api.odecasa.dtos.inquilinos.ListarInquilinosDTO;
 import com.api.odecasa.services.inquilinos.InquilinosService;
-import com.api.odecasa.models.inquilinos.InquilinosModel;
+import com.api.odecasa.models.inquilinos.Inquilinos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,8 +28,8 @@ public class InquilinosController {
     @PostMapping
     public ResponseEntity<Object> cadastrarInquilino(@RequestBody @Valid CadastrarInquilinosDTO novoInquilino){
         try {
-            InquilinosModel inquilino = new InquilinosModel(novoInquilino);
-            InquilinosModel cadastro = inquilinosService.save(inquilino);
+            Inquilinos inquilino = new Inquilinos(novoInquilino);
+            Inquilinos cadastro = inquilinosService.save(inquilino);
             return ResponseEntity.status(HttpStatus.CREATED).body(cadastro);
         } catch (Exception err){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);

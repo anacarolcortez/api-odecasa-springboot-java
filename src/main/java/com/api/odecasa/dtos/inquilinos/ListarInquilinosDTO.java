@@ -1,6 +1,6 @@
 package com.api.odecasa.dtos.inquilinos;
 
-import com.api.odecasa.models.inquilinos.InquilinosModel;
+import com.api.odecasa.models.inquilinos.Inquilinos;
 import lombok.Data;
 
 import java.util.UUID;
@@ -24,7 +24,7 @@ public class ListarInquilinosDTO {
         this.foto = foto;
     }
 
-    public ListarInquilinosDTO(InquilinosModel inquilino){
+    public ListarInquilinosDTO(Inquilinos inquilino){
         this(inquilino.getId(), inquilino.getApto(), inquilino.getNome(), inquilino.getBio(), inquilino.getTelefone(), inquilino.getFoto());
     }
 }

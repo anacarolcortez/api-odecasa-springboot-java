@@ -2,12 +2,16 @@ package com.api.odecasa.models.inquilinos;
 
 import com.api.odecasa.dtos.inquilinos.AtualizarInquilinosDTO;
 import com.api.odecasa.dtos.inquilinos.CadastrarInquilinosDTO;
+import com.api.odecasa.models.anuncios.Anuncios;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -16,14 +20,14 @@ import java.util.UUID;
 @EqualsAndHashCode(of="id")
 @Entity
 @Table(name="inquilinos")
-public class InquilinosModel implements Serializable {
+public class Inquilinos implements Serializable {
     private static final long serialVersionUID = 1l;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 5)
+    @Column(nullable = false, length = 5, unique = true)
     private String apto;
 
     @Column(nullable = false, length = 100)
@@ -42,15 +46,16 @@ public class InquilinosModel implements Serializable {
     private Boolean ativo = true;
 
 //    @Column(nullable = false)
-    private UUID idCondominio;
-
-//    @Column(nullable = false)
     private UUID idUsuario;
 
     @Column(nullable = false)
     private LocalDateTime dataCriacao = LocalDateTime.now(ZoneId.of("UTC"));
 
-    public InquilinosModel(CadastrarInquilinosDTO novoInquilino) {
+    @JsonIgnore
+    @OneToMany(mappedBy = "inquilino")
+    private Set<Anuncios> anuncios = new HashSet<>();
+
+    public Inquilinos(CadastrarInquilinosDTO novoInquilino) {
         this.apto = novoInquilino.getApto();
         this.nome = novoInquilino.getNome();
         this.bio = novoInquilino.getBio();

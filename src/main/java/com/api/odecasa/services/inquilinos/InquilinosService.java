@@ -2,7 +2,7 @@ package com.api.odecasa.services.inquilinos;
 
 import com.api.odecasa.dtos.inquilinos.AtualizarInquilinosDTO;
 import com.api.odecasa.dtos.inquilinos.ListarInquilinosDTO;
-import com.api.odecasa.models.inquilinos.InquilinosModel;
+import com.api.odecasa.models.inquilinos.Inquilinos;
 import com.api.odecasa.repositories.inquilinos.IInquilinosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,7 @@ public class InquilinosService {
     IInquilinosRepository inquilinosRepository;
 
     @Transactional
-    public InquilinosModel save(InquilinosModel inquilino) {
+    public Inquilinos save(Inquilinos inquilino) {
         return inquilinosRepository.save(inquilino);
     }
 
@@ -39,13 +39,13 @@ public class InquilinosService {
 
     @Transactional
     public void desativarRegistro(UUID id) {
-        InquilinosModel inquilino = inquilinosRepository.getReferenceById(id);
+        Inquilinos inquilino = inquilinosRepository.getReferenceById(id);
         inquilino.desativarRegistro();
     }
 
     @Transactional
     public void atualizarCadastroInquilino(AtualizarInquilinosDTO inquilinoDTO) {
-        InquilinosModel inquilino = inquilinosRepository.getReferenceById(inquilinoDTO.getId());
+        Inquilinos inquilino = inquilinosRepository.getReferenceById(inquilinoDTO.getId());
         inquilino.atualizarPeloId(inquilinoDTO);
     }
 }
