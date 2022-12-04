@@ -1,7 +1,9 @@
 package com.api.odecasa.models.anuncios;
 
+import com.api.odecasa.dtos.anuncios.CadastrarAnuncioDTO;
 import com.api.odecasa.models.tipos.Tipo;
-import com.api.odecasa.models.inquilinos.Inquilinos;
+import com.api.odecasa.models.inquilinos.Inquilino;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Anuncios implements Serializable {
+public class Anuncio implements Serializable {
 
     private static final long serialVersionUID = 1l;
 
@@ -41,10 +43,19 @@ public class Anuncios implements Serializable {
     private LocalDateTime dataCriacao = LocalDateTime.now(ZoneId.of("UTC"));
 
     @Column(nullable = false)
+    private LocalDateTime dataAtualizacao = LocalDateTime.now(ZoneId.of("UTC"));
+
+    @Column(nullable = false)
     private Boolean ativo = true;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="inquilino_id", referencedColumnName="id")
-    private Inquilinos inquilino;
+    private Inquilino inquilino;
 
+    public Anuncio(CadastrarAnuncioDTO novoAnuncio) {
+        this.titulo = novoAnuncio.getTitulo();
+        this.descricao = novoAnuncio.getDescricao();
+        this.tipo = novoAnuncio.getTipo();
+    }
 }

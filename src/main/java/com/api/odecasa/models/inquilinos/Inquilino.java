@@ -1,8 +1,8 @@
 package com.api.odecasa.models.inquilinos;
 
-import com.api.odecasa.dtos.inquilinos.AtualizarInquilinosDTO;
-import com.api.odecasa.dtos.inquilinos.CadastrarInquilinosDTO;
-import com.api.odecasa.models.anuncios.Anuncios;
+import com.api.odecasa.dtos.inquilinos.AtualizarInquilinoDTO;
+import com.api.odecasa.dtos.inquilinos.CadastrarInquilinoDTO;
+import com.api.odecasa.models.anuncios.Anuncio;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -20,14 +20,14 @@ import java.util.UUID;
 @EqualsAndHashCode(of="id")
 @Entity
 @Table(name="inquilinos")
-public class Inquilinos implements Serializable {
+public class Inquilino implements Serializable {
     private static final long serialVersionUID = 1l;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 5, unique = true)
+    @Column(nullable = false, length = 5)
     private String apto;
 
     @Column(nullable = false, length = 100)
@@ -51,11 +51,14 @@ public class Inquilinos implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataCriacao = LocalDateTime.now(ZoneId.of("UTC"));
 
+    @Column(nullable = false)
+    private LocalDateTime dataAtualizacao = LocalDateTime.now(ZoneId.of("UTC"));
+
     @JsonIgnore
     @OneToMany(mappedBy = "inquilino")
-    private Set<Anuncios> anuncios = new HashSet<>();
+    private Set<Anuncio> anuncios = new HashSet<>();
 
-    public Inquilinos(CadastrarInquilinosDTO novoInquilino) {
+    public Inquilino(CadastrarInquilinoDTO novoInquilino) {
         this.apto = novoInquilino.getApto();
         this.nome = novoInquilino.getNome();
         this.bio = novoInquilino.getBio();
@@ -67,7 +70,7 @@ public class Inquilinos implements Serializable {
         this.ativo = false;
     }
 
-    public void atualizarPeloId(AtualizarInquilinosDTO inquilinoDados) {
+    public void atualizarPeloId(AtualizarInquilinoDTO inquilinoDados) {
         if (inquilinoDados.getApto() != null) {
             this.apto = inquilinoDados.getApto();
         }
@@ -87,6 +90,8 @@ public class Inquilinos implements Serializable {
         if (inquilinoDados.getFoto() != null) {
             this.foto = inquilinoDados.getFoto();
         }
+
+        this.dataAtualizacao =  LocalDateTime.now(ZoneId.of("UTC"));
     }
     //Com lombock não precisa incluir boilerplates de getter e setter, ele mesmo faz
 }

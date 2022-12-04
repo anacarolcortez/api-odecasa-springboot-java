@@ -1,12 +1,12 @@
 package com.api.odecasa.dtos.inquilinos;
 
-import com.api.odecasa.models.inquilinos.Inquilinos;
+import com.api.odecasa.models.inquilinos.Inquilino;
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-public class ListarInquilinosDTO {
+public class ListarInquilinoDTO {
 
     private UUID id;
     private String apto;
@@ -15,7 +15,7 @@ public class ListarInquilinosDTO {
     private String telefone;
     private String foto;
 
-    public ListarInquilinosDTO(UUID id, String apto, String nome, String bio, String telefone, String foto) {
+    public ListarInquilinoDTO(UUID id, String apto, String nome, String bio, String telefone, String foto) {
         this.id = id;
         this.apto = apto;
         this.nome = nome;
@@ -24,7 +24,7 @@ public class ListarInquilinosDTO {
         this.foto = foto;
     }
 
-    public ListarInquilinosDTO(Inquilinos inquilino){
+    public ListarInquilinoDTO(Inquilino inquilino){
         this(inquilino.getId(), inquilino.getApto(), inquilino.getNome(), inquilino.getBio(), inquilino.getTelefone(), inquilino.getFoto());
     }
 }

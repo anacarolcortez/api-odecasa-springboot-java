@@ -1,16 +1,18 @@
 package com.api.odecasa.controllers.inquilinos;
 
-import com.api.odecasa.dtos.inquilinos.AtualizarInquilinosDTO;
-import com.api.odecasa.dtos.inquilinos.CadastrarInquilinosDTO;
-import com.api.odecasa.dtos.inquilinos.ListarInquilinosDTO;
-import com.api.odecasa.services.inquilinos.InquilinosService;
-import com.api.odecasa.models.inquilinos.Inquilinos;
+import com.api.odecasa.dtos.inquilinos.AtualizarInquilinoDTO;
+import com.api.odecasa.dtos.inquilinos.CadastrarInquilinoDTO;
+import com.api.odecasa.dtos.inquilinos.ListarInquilinoDTO;
+import com.api.odecasa.services.inquilinos.InquilinoService;
+import com.api.odecasa.models.inquilinos.Inquilino;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,31 +22,27 @@ import java.util.UUID;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/inquilinos")
-public class InquilinosController {
+public class InquilinoController {
 
     @Autowired
-    InquilinosService inquilinosService;
+    InquilinoService inquilinoService;
 
     @PostMapping
-    public ResponseEntity<Object> cadastrarInquilino(@RequestBody @Valid CadastrarInquilinosDTO novoInquilino){
-        try {
-            Inquilinos inquilino = new Inquilinos(novoInquilino);
-            Inquilinos cadastro = inquilinosService.save(inquilino);
-            return ResponseEntity.status(HttpStatus.CREATED).body(cadastro);
-        } catch (Exception err){
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
-        }
+    public ResponseEntity<Object> cadastrarInquilino(@RequestBody @Valid CadastrarInquilinoDTO novoInquilino) {
+        Inquilino inquilino = new Inquilino(novoInquilino);
+        Inquilino cadastro = inquilinoService.save(inquilino);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cadastro);
     }
 
     @GetMapping
     public ResponseEntity<Object> listarInquilinos(@PageableDefault(sort={"nome"}) Pageable page){
-        Page<ListarInquilinosDTO> listagem = inquilinosService.getAll(page);
+        Page<ListarInquilinoDTO> listagem = inquilinoService.getAll(page);
         return ResponseEntity.status(HttpStatus.OK).body(listagem);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> consultarUmInquilino(@PathVariable(value = "id") UUID id){
-        Optional<ListarInquilinosDTO> inquilino = inquilinosService.getById(id);
+        Optional<ListarInquilinoDTO> inquilino = inquilinoService.getById(id);
         if (!inquilino.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Inquilino não encontrado");
         } else {
@@ -54,31 +52,31 @@ public class InquilinosController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletarUmInquilino(@PathVariable(value = "id") UUID id){
-        Optional<ListarInquilinosDTO> inquilino = inquilinosService.getById(id);
+        Optional<ListarInquilinoDTO> inquilino = inquilinoService.getById(id);
         if (!inquilino.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Inquilino não encontrado");
         }
-        inquilinosService.delete(id);
+        inquilinoService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Cadastro excluído com sucesso");
     }
 
     @DeleteMapping("/desativar/{id}")
     public ResponseEntity<Object> desativarRegistro(@PathVariable(value = "id") UUID id){
-        Optional<ListarInquilinosDTO> inquilino = inquilinosService.getById(id);
+        Optional<ListarInquilinoDTO> inquilino = inquilinoService.getById(id);
         if (!inquilino.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Inquilino não encontrado");
         }
-        inquilinosService.desativarRegistro(id);
+        inquilinoService.desativarRegistro(id);
         return ResponseEntity.status(HttpStatus.OK).body("Cadastro desativado com sucesso");
     }
 
     @PatchMapping()
-    public ResponseEntity<Object> atualizarInquilino(@RequestBody @Valid AtualizarInquilinosDTO inquilinosDTO){
-        Optional<ListarInquilinosDTO> inquilino = inquilinosService.getById(inquilinosDTO.getId());
+    public ResponseEntity<Object> atualizarInquilino(@RequestBody @Valid AtualizarInquilinoDTO inquilinosDTO){
+        Optional<ListarInquilinoDTO> inquilino = inquilinoService.getById(inquilinosDTO.getId());
         if (!inquilino.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Inquilino não encontrado");
         }
-        inquilinosService.atualizarCadastroInquilino(inquilinosDTO);
+        inquilinoService.atualizarCadastroInquilino(inquilinosDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Cadastro atualizado com sucesso");
     }
 
