@@ -2,6 +2,7 @@ package com.api.odecasa.models.inquilinos;
 
 import com.api.odecasa.dtos.inquilinos.AtualizarInquilinoDTO;
 import com.api.odecasa.dtos.inquilinos.CadastrarInquilinoDTO;
+import com.api.odecasa.dtos.inquilinos.ListarInquilinoDTO;
 import com.api.odecasa.models.anuncios.Anuncio;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -64,6 +65,15 @@ public class Inquilino implements Serializable {
         this.bio = novoInquilino.getBio();
         this.telefone = novoInquilino.getTelefone();
         this.foto = novoInquilino.getFoto();
+    }
+
+    public Inquilino(ListarInquilinoDTO inquilino) {
+        this.id = inquilino.getId();
+        this.apto = inquilino.getApto();
+        this.nome = inquilino.getNome();
+        this.bio = inquilino.getBio();
+        this.telefone = inquilino.getTelefone();
+        this.foto = inquilino.getFoto();
     }
 
     public void desativarRegistro() {

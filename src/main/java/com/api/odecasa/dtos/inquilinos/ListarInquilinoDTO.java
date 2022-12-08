@@ -27,4 +27,5 @@ public class ListarInquilinoDTO {
     public ListarInquilinoDTO(Inquilino inquilino){
         this(inquilino.getId(), inquilino.getApto(), inquilino.getNome(), inquilino.getBio(), inquilino.getTelefone(), inquilino.getFoto());
     }
+
 }

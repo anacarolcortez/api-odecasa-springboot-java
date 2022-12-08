@@ -19,12 +19,12 @@ public class AnuncioService {
     private IAnuncioRepository anuncioRepository;
 
     @Autowired
-    private IInquilinoRepository inquilinoRepository;
+    private InquilinoService inquilinoService;
 
     public Anuncio save(Anuncio anuncio, UUID idInquilino) throws Exception {
-        Optional<Inquilino> inquilino = inquilinoRepository.findById(idInquilino);
+        Optional<ListarInquilinoDTO> inquilino = inquilinoService.getById(idInquilino);
         if (inquilino != null){
-            anuncio.setInquilino(inquilino.get());
+            anuncio.setInquilino(new Inquilino(inquilino.get()));
             return anuncioRepository.save(anuncio);
         } else {
             throw new Exception("Id do inquilino inválido");
