@@ -4,6 +4,7 @@ import com.api.odecasa.dtos.inquilinos.AtualizarInquilinoDTO;
 import com.api.odecasa.dtos.inquilinos.CadastrarInquilinoDTO;
 import com.api.odecasa.dtos.inquilinos.ListarInquilinoDTO;
 import com.api.odecasa.models.anuncios.Anuncio;
+import com.api.odecasa.models.usuarios.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -46,8 +47,13 @@ public class Inquilino implements Serializable {
     @Column(nullable = false)
     private Boolean ativo = true;
 
-//    @Column(nullable = false)
-    private UUID idUsuario;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_inquilino",
+            joinColumns =
+                    { @JoinColumn(name = "inquilino_id", referencedColumnName = "id") },
+            inverseJoinColumns =
+                    { @JoinColumn(name = "usuario_id", referencedColumnName = "id") })
+    private Usuario usuario;
 
     @Column(nullable = false)
     private LocalDateTime dataCriacao = LocalDateTime.now(ZoneId.of("UTC"));
@@ -103,5 +109,4 @@ public class Inquilino implements Serializable {
 
         this.dataAtualizacao =  LocalDateTime.now(ZoneId.of("UTC"));
     }
-    //Com lombock não precisa incluir boilerplates de getter e setter, ele mesmo faz
 }

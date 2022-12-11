@@ -1,9 +1,7 @@
-package com.api.odecasa.models.anuncios;
+package com.api.odecasa.models.usuarios;
 
-import com.api.odecasa.dtos.anuncios.CadastrarAnuncioDTO;
-import com.api.odecasa.models.tipos.Tipo;
 import com.api.odecasa.models.inquilinos.Inquilino;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.api.odecasa.models.perfisacesso.PerfilAcesso;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,28 +13,31 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.UUID;
 
-@Entity
-@Table(name = "anuncios")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class Anuncio implements Serializable {
+@EqualsAndHashCode(of="id")
+@Entity
+@Table(name="usuarios")
+public class Usuario implements Serializable {
     private static final long serialVersionUID = 1l;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 50)
-    private String titulo;
+    @Column(nullable = false, length = 20)
+    private String usuario;
 
-    @Column(nullable = false, length = 160)
-    private String descricao;
+    @Column(nullable = false, length = 100)
+    private String senha;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Tipo tipo;
+    private PerfilAcesso perfil;
+
+    @OneToOne(mappedBy = "usuario")
+    private Inquilino inquilino;
 
     @Column(nullable = false)
     private LocalDateTime dataCriacao = LocalDateTime.now(ZoneId.of("UTC"));
@@ -46,15 +47,4 @@ public class Anuncio implements Serializable {
 
     @Column(nullable = false)
     private Boolean ativo = true;
-
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="inquilino_id", referencedColumnName="id")
-    private Inquilino inquilino;
-
-    public Anuncio(CadastrarAnuncioDTO novoAnuncio) {
-        this.titulo = novoAnuncio.getTitulo();
-        this.descricao = novoAnuncio.getDescricao();
-        this.tipo = novoAnuncio.getTipo();
-    }
 }
