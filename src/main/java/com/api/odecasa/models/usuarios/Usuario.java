@@ -1,7 +1,9 @@
 package com.api.odecasa.models.usuarios;
 
+import com.api.odecasa.dtos.usuarios.CadastrarUsuarioDTO;
 import com.api.odecasa.models.inquilinos.Inquilino;
 import com.api.odecasa.models.perfisacesso.PerfilAcesso;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +28,7 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String usuario;
 
     @Column(nullable = false, length = 100)
@@ -36,6 +38,7 @@ public class Usuario implements Serializable {
     @Enumerated(EnumType.STRING)
     private PerfilAcesso perfil;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "usuario")
     private Inquilino inquilino;
 
@@ -47,4 +50,11 @@ public class Usuario implements Serializable {
 
     @Column(nullable = false)
     private Boolean ativo = true;
+
+    public Usuario(CadastrarUsuarioDTO novoUsuario) {
+        this.usuario = novoUsuario.getUsuario();
+        this.senha = novoUsuario.getSenha();
+        this.perfil = novoUsuario.getPerfil();
+    }
+
 }

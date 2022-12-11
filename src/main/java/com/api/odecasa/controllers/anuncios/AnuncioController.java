@@ -21,8 +21,7 @@ public class AnuncioController {
 
     @PostMapping("/{idInquilino}")
     public ResponseEntity cadastrarAnuncio(@PathVariable UUID idInquilino, @RequestBody @Valid CadastrarAnuncioDTO novoAnuncio) throws Exception {
-        Anuncio anuncio = new Anuncio(novoAnuncio);
-        Anuncio cadastro = anuncioService.save(anuncio, idInquilino);
+        Anuncio cadastro = anuncioService.save(novoAnuncio, idInquilino);
         return ResponseEntity.status(201).body(cadastro);
     }
 

@@ -1,6 +1,7 @@
 package com.api.odecasa.services.inquilinos;
 
 import com.api.odecasa.dtos.inquilinos.AtualizarInquilinoDTO;
+import com.api.odecasa.dtos.inquilinos.CadastrarInquilinoDTO;
 import com.api.odecasa.dtos.inquilinos.ListarInquilinoDTO;
 import com.api.odecasa.models.inquilinos.Inquilino;
 import com.api.odecasa.repositories.inquilinos.IInquilinoRepository;
@@ -20,7 +21,8 @@ public class InquilinoService {
     IInquilinoRepository inquilinosRepository;
 
     @Transactional
-    public Inquilino save(Inquilino inquilino) {
+    public Inquilino save(CadastrarInquilinoDTO inquilinoDTO) {
+        Inquilino inquilino = new Inquilino(inquilinoDTO);
         return inquilinosRepository.save(inquilino);
     }
 

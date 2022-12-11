@@ -47,6 +47,7 @@ public class Inquilino implements Serializable {
     @Column(nullable = false)
     private Boolean ativo = true;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_inquilino",
             joinColumns =

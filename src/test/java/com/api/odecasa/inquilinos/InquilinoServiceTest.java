@@ -1,6 +1,6 @@
 package com.api.odecasa.inquilinos;
 
-import com.api.odecasa.models.inquilinos.Inquilino;
+import com.api.odecasa.dtos.inquilinos.CadastrarInquilinoDTO;
 import com.api.odecasa.services.inquilinos.InquilinoService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class InquilinoServiceTest {
 
     @Test
     public void deveriaRetornarUmInquilinoComDadosCorretos(){
-        Inquilino inquilinoTeste = new Inquilino();
+        CadastrarInquilinoDTO inquilinoTeste = new CadastrarInquilinoDTO();
         inquilinoTeste.setApto("71A");
         inquilinoTeste.setBio("Bruxa do 71");
         inquilinoTeste.setNome("Dona Clotilde");

@@ -1,5 +1,6 @@
 package com.api.odecasa.services.anuncios;
 
+import com.api.odecasa.dtos.anuncios.CadastrarAnuncioDTO;
 import com.api.odecasa.dtos.inquilinos.ListarInquilinoDTO;
 import com.api.odecasa.models.anuncios.Anuncio;
 import com.api.odecasa.models.inquilinos.Inquilino;
@@ -21,10 +22,11 @@ public class AnuncioService {
     @Autowired
     private InquilinoService inquilinoService;
 
-    public Anuncio save(Anuncio anuncio, UUID idInquilino) throws Exception {
+    public Anuncio save(CadastrarAnuncioDTO novoAnuncio, UUID idInquilino) throws Exception {
         Optional<ListarInquilinoDTO> inquilino = inquilinoService.getById(idInquilino);
         if (inquilino != null){
-            anuncio.setInquilino(new Inquilino(inquilino.get()));
+            novoAnuncio.setInquilino(new Inquilino(inquilino.get()));
+            Anuncio anuncio = new Anuncio(novoAnuncio);
             return anuncioRepository.save(anuncio);
         } else {
             throw new Exception("Id do inquilino inválido");

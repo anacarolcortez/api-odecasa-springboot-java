@@ -29,8 +29,7 @@ public class InquilinoController {
 
     @PostMapping
     public ResponseEntity<Object> cadastrarInquilino(@RequestBody @Valid CadastrarInquilinoDTO novoInquilino) {
-        Inquilino inquilino = new Inquilino(novoInquilino);
-        Inquilino cadastro = inquilinoService.save(inquilino);
+        Inquilino cadastro = inquilinoService.save(novoInquilino);
         return ResponseEntity.status(HttpStatus.CREATED).body(cadastro);
     }
 
