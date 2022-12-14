@@ -39,7 +39,7 @@ public class Usuario implements Serializable {
     private PerfilAcesso perfil;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Inquilino inquilino;
 
     @Column(nullable = false)
