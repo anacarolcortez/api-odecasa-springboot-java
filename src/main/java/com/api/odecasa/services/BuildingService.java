@@ -11,10 +11,13 @@ import com.api.odecasa.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -54,6 +57,19 @@ public class BuildingService {
         } catch (DataIntegrityViolationException err) {
             throw new DatabaseException("Integrity violation");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public BuildingDTO getById(UUID id){
+        Optional<Building> optionalBuilding = repository.findById(id);
+        Building building = optionalBuilding.orElseThrow(() -> new ResourceNotFoundException("Id not found" + id));
+        return new BuildingDTO(building, building.getApartments());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<BuildingDTO> findAllPaged(PageRequest pageRequest){
+        Page<Building> buildings = repository.findAll(pageRequest);
+        return buildings.map(b -> new BuildingDTO(b, b.getApartments()));
     }
 
     private void copyDTOtoEntity(BuildingDTO buildingDTO, Building building) {
