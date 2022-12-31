@@ -6,9 +6,16 @@ import com.api.odecasa.entities.Apartment;
 import com.api.odecasa.entities.Building;
 import com.api.odecasa.repositories.ApartmentRepository;
 import com.api.odecasa.repositories.BuildingRepository;
+import com.api.odecasa.services.exceptions.DatabaseException;
+import com.api.odecasa.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
+import java.util.UUID;
 
 @Service
 public class BuildingService {
@@ -27,12 +34,48 @@ public class BuildingService {
         return new BuildingDTO(building, building.getApartments());
     }
 
+    @Transactional
+    public BuildingDTO update(UUID id, BuildingDTO buildingDTO){
+        try{
+            Building building = repository.getReferenceById(id);
+            copyDTOtoEntity(buildingDTO, building);
+            building = repository.save(building);
+            return new BuildingDTO(building, building.getApartments());
+        } catch (EntityNotFoundException err) {
+            throw new ResourceNotFoundException("Id not found" + id);
+        }
+    }
+
+    public void delete(UUID id){
+        try{
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException err){
+            throw new ResourceNotFoundException("Id not found" + id);
+        } catch (DataIntegrityViolationException err) {
+            throw new DatabaseException("Integrity violation");
+        }
+    }
+
     private void copyDTOtoEntity(BuildingDTO buildingDTO, Building building) {
-        building.setCNPJ(buildingDTO.getCNPJ());
-        building.setAddress(buildingDTO.getAddress());
-        building.setZipcode(buildingDTO.getZipcode());
-        building.setEmail(buildingDTO.getEmail());
-        building.setPhone(buildingDTO.getPhone());
+        if (buildingDTO.getCNPJ() != null){
+            building.setCNPJ(buildingDTO.getCNPJ());
+        }
+
+        if (buildingDTO.getAddress() != null){
+            building.setAddress(buildingDTO.getAddress());
+        }
+
+        if (buildingDTO.getZipcode() != null){
+            building.setZipcode(buildingDTO.getZipcode());
+        }
+
+        if (buildingDTO.getEmail() != null){
+            building.setEmail(buildingDTO.getEmail());
+        }
+
+        if (buildingDTO.getPhone() != null){
+            building.setPhone(buildingDTO.getPhone());
+        }
 
         building.getApartments().clear();
         for (ApartmentDTO apt: buildingDTO.getApartments()){
