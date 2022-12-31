@@ -37,13 +37,8 @@ public class Building implements Serializable {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tb_building_apts",
-            joinColumns = @JoinColumn(name = "building_id"),
-            inverseJoinColumns = @JoinColumn(name = "apt_id")
-    )
-    Set<Apartment> categories = new HashSet<>();
+    @OneToMany(mappedBy = "building")
+    Set<Apartment> apartments = new HashSet<>();
 
     public Building(){}
 
@@ -122,8 +117,8 @@ public class Building implements Serializable {
         updatedAt = Instant.now();
     }
 
-    public Set<Apartment> getCategories() {
-        return categories;
+    public Set<Apartment> getApartments() {
+        return apartments;
     }
 
     @Override

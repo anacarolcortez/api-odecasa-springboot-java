@@ -28,6 +28,10 @@ public class Apartment implements Serializable {
     @OneToMany(mappedBy = "apartment")
     private Set<Tenant> tenants = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "building_id")
+    private Building building;
+
     public Apartment(){}
 
     public Apartment(UUID uuid, String apt, Boolean occupied) {
@@ -80,5 +84,9 @@ public class Apartment implements Serializable {
 
     public Set<Tenant> getTenants() {
         return tenants;
+    }
+
+    public Building getBuilding() {
+        return building;
     }
 }
