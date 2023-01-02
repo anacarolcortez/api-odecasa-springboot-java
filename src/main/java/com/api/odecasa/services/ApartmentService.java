@@ -1,6 +1,7 @@
 package com.api.odecasa.services;
 
 import com.api.odecasa.dtos.ApartmentDTO;
+import com.api.odecasa.dtos.BuildingDTO;
 import com.api.odecasa.dtos.TenantDTO;
 import com.api.odecasa.entities.Apartment;
 import com.api.odecasa.entities.Building;
@@ -8,11 +9,13 @@ import com.api.odecasa.entities.Tenant;
 import com.api.odecasa.repositories.ApartmentRepository;
 import com.api.odecasa.repositories.BuildingRepository;
 import com.api.odecasa.repositories.TenantRepository;
+import com.api.odecasa.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.UUID;
 
 @Service
@@ -24,15 +27,19 @@ public class ApartmentService {
     @Autowired
     private BuildingRepository buildingRepository;
 
-    @Autowired
-    private TenantRepository tenantRepository;
-
     @Transactional
-    public ApartmentDTO insert(@RequestBody ApartmentDTO apartmentDTO){
-        Apartment apartment = new Apartment();
-        copyDTOtoEntity(apartmentDTO, apartment);
-        repository.save(apartment);
-        return new ApartmentDTO(apartment);
+    public ApartmentDTO insert(UUID buildingID, ApartmentDTO apartmentDTO){
+        // precisa validar se ap já está cadastrado nesse prédio
+        try{
+            Apartment apartment = new Apartment();
+            Building building = buildingRepository.getReferenceById(buildingID);
+            apartment.setBuilding(building);
+            copyDTOtoEntity(apartmentDTO, apartment);
+            repository.save(apartment);
+            return new ApartmentDTO(apartment, apartment.getBuilding());
+        } catch (EntityNotFoundException err){
+            throw new ResourceNotFoundException("Building id not found: " + buildingID);
+        }
     }
 
     private void copyDTOtoEntity(ApartmentDTO apartmentDTO, Apartment apartment) {
@@ -42,20 +49,7 @@ public class ApartmentService {
 
         if (apartmentDTO.getOccupied() != null){
             apartment.setOccupied(apartmentDTO.getOccupied());
-        }
+        } // se estiver ocupado, precisa também do id do tenant.
 
-        //Corrigir parse error
-        if (apartmentDTO.getBuilding() != null){
-            Building building = buildingRepository.getReferenceById(apartmentDTO.getBuilding().getId());
-            System.out.println(building);
-            apartment.setBuilding(building);
-        }
-
-        if (apartmentDTO.getTenants() != null){
-            for (TenantDTO t: apartmentDTO.getTenants()){
-                Tenant tenant = tenantRepository.getReferenceById(t.getId());
-                apartmentDTO.getTenants().add(new TenantDTO(tenant));
-            }
-        }
     }
 }
