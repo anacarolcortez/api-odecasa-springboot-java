@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/admin/building")
+@RequestMapping("/building")
 public class BuildingController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class BuildingController {
         BuildingDTO building = service.insert(buildingDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(building.getUuid())
+                .buildAndExpand(building.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(building);
     }

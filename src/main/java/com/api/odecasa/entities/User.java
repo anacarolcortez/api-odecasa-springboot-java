@@ -14,7 +14,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    private UUID id;
 
     @Column(nullable = false, length = 20)
     private String username;
@@ -37,20 +37,20 @@ public class User implements Serializable {
 
     public User() {}
 
-    public User(UUID uuid, String username, String password, Boolean active, Permission permission) {
-        this.uuid = uuid;
+    public User(UUID id, String username, String password, Boolean active, Permission permission) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.active = active;
         this.permission = permission;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -100,11 +100,11 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return uuid.equals(user.uuid);
+        return id.equals(user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid);
+        return Objects.hash(id);
     }
 }

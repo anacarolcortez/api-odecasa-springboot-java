@@ -2,31 +2,33 @@ package com.api.odecasa.dtos;
 
 import com.api.odecasa.entities.Apartment;
 import com.api.odecasa.entities.Building;
+import com.api.odecasa.entities.Tenant;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class ApartmentDTO implements Serializable {
 
-    private UUID uuid;
+    private UUID id;
     private String apt;
     private Boolean occupied;
-    //private Set<Tenant> tenants = new HashSet<>();
-    private BuildingDTO building;
 
-    //Ajustar para receber o Inquilino em segudia
+    private Set<TenantDTO> tenants = new HashSet<>();
+    private BuildingDTO building;
 
     public ApartmentDTO() {}
 
     public ApartmentDTO(UUID uuid, String apt, Boolean occupied, BuildingDTO building) {
-        this.uuid = uuid;
+        this.id = uuid;
         this.apt = apt;
         this.occupied = occupied;
         this.building = building;
     }
 
     public ApartmentDTO(Apartment apartment) {
-        this.uuid = apartment.getUuid();
+        this.id = apartment.getId();
         this.apt = apartment.getApt();
         this.occupied = apartment.getOccupied();
     }
@@ -36,12 +38,19 @@ public class ApartmentDTO implements Serializable {
         this.building = new BuildingDTO(building);
     }
 
+    public ApartmentDTO(Apartment apartment, Set<Tenant> tenants) {
+        this(apartment);
+        for (Tenant t: tenants){
+            this.tenants.add(new TenantDTO(t));
+        }
+    }
+
     public UUID getUuid() {
-        return uuid;
+        return id;
     }
 
     public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+        this.id = uuid;
     }
 
     public String getApt() {
@@ -66,5 +75,13 @@ public class ApartmentDTO implements Serializable {
 
     public void setBuilding(BuildingDTO building) {
         this.building = building;
+    }
+
+    public Set<TenantDTO> getTenants() {
+        return tenants;
+    }
+
+    public void setTenants(Set<TenantDTO> tenants) {
+        this.tenants = tenants;
     }
 }

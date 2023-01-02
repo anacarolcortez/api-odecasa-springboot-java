@@ -1,7 +1,6 @@
 package com.api.odecasa.entities;
 
 import com.api.odecasa.entities.utils.AdType;
-import jdk.jfr.BooleanFlag;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +14,7 @@ public class Advertising implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    private UUID id;
 
     @Column(nullable = false, length = 50)
     private String title;
@@ -42,20 +41,20 @@ public class Advertising implements Serializable {
 
     public Advertising() {}
 
-    public Advertising(UUID uuid, String title, String description, Boolean active, AdType adType) {
-        this.uuid = uuid;
+    public Advertising(UUID id, String title, String description, Boolean active, AdType adType) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.active = active;
         this.adType = adType;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -113,11 +112,11 @@ public class Advertising implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Advertising that = (Advertising) o;
-        return uuid.equals(that.uuid);
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid);
+        return Objects.hash(id);
     }
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class BuildingDTO implements Serializable {
 
-    private UUID uuid;
+    private UUID id;
     private String CNPJ;
     private String address;
     private String zipcode;
@@ -20,8 +20,8 @@ public class BuildingDTO implements Serializable {
 
     public BuildingDTO() {}
 
-    public BuildingDTO(UUID uuid, String CNPJ, String address, String zipcode, String phone, String email) {
-        this.uuid = uuid;
+    public BuildingDTO(UUID id, String CNPJ, String address, String zipcode, String phone, String email) {
+        this.id = id;
         this.CNPJ = CNPJ;
         this.address = address;
         this.zipcode = zipcode;
@@ -30,7 +30,7 @@ public class BuildingDTO implements Serializable {
     }
 
     public BuildingDTO(Building building) {
-        this.uuid = building.getUuid();
+        this.id = building.getId();
         this.CNPJ = building.getCNPJ();
         this.address = building.getAddress();
         this.zipcode = building.getZipcode();
@@ -43,12 +43,12 @@ public class BuildingDTO implements Serializable {
         apartments.forEach(apt -> this.apartments.add(new ApartmentDTO(apt)));
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getCNPJ() {

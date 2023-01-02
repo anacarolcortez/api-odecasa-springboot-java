@@ -11,7 +11,7 @@ public class Apartment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    private UUID id;
 
     @Column(nullable = false, length = 6)
     private String apt;
@@ -34,18 +34,18 @@ public class Apartment implements Serializable {
 
     public Apartment(){}
 
-    public Apartment(UUID uuid, String apt, Boolean occupied) {
-        this.uuid = uuid;
+    public Apartment(UUID id, String apt, Boolean occupied) {
+        this.id = id;
         this.apt = apt;
         this.occupied = occupied;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getApt() {
@@ -86,7 +86,15 @@ public class Apartment implements Serializable {
         return tenants;
     }
 
+    public void setTenants(Set<Tenant> tenants) {
+        this.tenants = tenants;
+    }
+
     public Building getBuilding() {
         return building;
+    }
+    
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 }

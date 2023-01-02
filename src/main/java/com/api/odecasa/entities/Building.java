@@ -14,7 +14,7 @@ public class Building implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    private UUID id;
 
     @Column(nullable = false, length = 14)
     private String CNPJ;
@@ -42,8 +42,8 @@ public class Building implements Serializable {
 
     public Building(){}
 
-    public Building(UUID uuid, String CNPJ, String address, String zipcode, String phone, String email) {
-        this.uuid = uuid;
+    public Building(UUID id, String CNPJ, String address, String zipcode, String phone, String email) {
+        this.id = id;
         this.CNPJ = CNPJ;
         this.address = address;
         this.zipcode = zipcode;
@@ -51,12 +51,12 @@ public class Building implements Serializable {
         this.email = email;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getCNPJ() {
@@ -126,11 +126,11 @@ public class Building implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Building building = (Building) o;
-        return uuid.equals(building.uuid);
+        return id.equals(building.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid);
+        return Objects.hash(id);
     }
 }

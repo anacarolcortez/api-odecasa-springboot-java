@@ -14,7 +14,7 @@ public class Tenant implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    private UUID id;
 
     @Column(nullable = false)
     private String name;
@@ -43,20 +43,20 @@ public class Tenant implements Serializable {
 
     public Tenant() {}
 
-    public Tenant(UUID uuid, String name, String email, String phone, String bio) {
-        this.uuid = uuid;
+    public Tenant(UUID id, String name, String email, String phone, String bio) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.bio = bio;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -130,11 +130,11 @@ public class Tenant implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tenant tenant = (Tenant) o;
-        return uuid.equals(tenant.uuid);
+        return id.equals(tenant.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid);
+        return Objects.hash(id);
     }
 }
